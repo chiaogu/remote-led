@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "node src/server/index.js",
-    "hardware": "node src/hardware/index.js"
+    "server": "node src/server.js",
+    "hardware": "node src/hardware.js"
   },
   "author": "",
   "license": "ISC",

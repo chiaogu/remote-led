@@ -9,5 +9,7 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', socket => {
-  console.log('connect!!');
+  socket.on('signal', event => {
+    io.emit('signal', event);
+  });
 });

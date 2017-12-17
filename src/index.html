@@ -1,13 +1,67 @@
 <html>
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  #app {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #333;
+  }
+
+  .btn {
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    background: #666;
+  }
+
+  .btn:hover {
+    background: #ddd;
+  }
+</style>
+
 <body>
-  <h1>hello</h1>
+  <div id="app">
+    <div 
+      class="btn" 
+      v-for="btn in buttons" 
+      @mouseenter="on(btn)" 
+      @mouseleave="off(btn)"></div>
+  </div>
 </body>
 
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io('http://localhost:8080');
-  socket.on('msg', function (data) {
-    console.log(data);
+  socket.on('connect', function () {
+    new Vue({
+      el: '#app',
+      data: {
+        buttons: [13, 12]
+      },
+      methods: {
+        on: function (btn) {
+          socket.emit('signal', {
+            type: 'on',
+            id: btn
+          });
+        },
+        off: function (btn) {
+          socket.emit('signal', {
+            type: 'off',
+            id: btn
+          });
+        }
+      }
+    });
   });
 </script>
+
 </html>
